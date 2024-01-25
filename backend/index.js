@@ -14,7 +14,9 @@ const cors = require('cors');
 
 
 app.use(cors({
-  origin: 'http://localhost:3000', // Specify the allowed origin
+  origin: ['http://localhost:3000',
+           'https://demo-lms-q1or.vercel.app']
+           // Specify the allowed origin
   methods: ['GET', 'DELETE','PUT','POST'], // Specify the allowed HTTP methods as an array
   // You can include other options as needed
 }));
