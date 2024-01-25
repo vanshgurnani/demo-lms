@@ -19,7 +19,7 @@ export default function Dashboard() {
 
   const getStudents = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/student/getStudent");
+      const response = await axios.get("https://demo-lms.vercel.app/student/getStudent");
       const newData = response.data;
       setStudents(newData?.length);
 
@@ -31,7 +31,7 @@ export default function Dashboard() {
 
   const getBooks = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/book/getBook");
+      const response = await axios.get("https://demo-lms.vercel.app/book/getBook");
       const newData = response.data;
       setBooks(newData?.length);
 
@@ -43,7 +43,7 @@ export default function Dashboard() {
 
   const getAllot = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/allot/getAllot");
+      const response = await axios.get("https://demo-lms.vercel.app/allot/getAllot");
       const newData = response.data;
       setLending(newData?.length);
 
@@ -55,7 +55,7 @@ export default function Dashboard() {
 
   const getRemain = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/allot/getAllotNotReturned");
+      const response = await axios.get("https://demo-lms.vercel.app/allot/getAllotNotReturned");
       const newData = response.data;
       setRemaining(newData?.length);
 

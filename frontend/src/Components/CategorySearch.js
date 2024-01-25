@@ -10,7 +10,7 @@ const CategorySearch = ({ handleAllotChange }) => {
   useEffect(() => {
     async function fetchBooks() {
       try {
-        const response = await axios.get(`http://localhost:5000/book/getBookByName/${bookName}`);
+        const response = await axios.get(`https://demo-lms.vercel.app/book/getBookByName/${bookName}`);
         setFilterBooks(response.data ? [response.data] : []);
       } catch (error) {
         console.error('Error fetching books:', error);
