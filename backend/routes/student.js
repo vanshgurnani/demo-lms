@@ -3,6 +3,16 @@ const router = express.Router();
 const Student = require('../model/student');
 const mongoose = require('mongoose');
 
+const cors = require('cors');
+
+
+router.use(cors({
+  origin: ['http://localhost:3000',
+  'https://demo-lms-q1or.vercel.app'], // Specify the allowed origin
+  methods: ['GET', 'DELETE','PUT','POST']
+  // You can include other options as needed
+}));
+
 
 router.get('/',async (req,res)=>{
     res.send("Welcome to the LMS-Student API");
