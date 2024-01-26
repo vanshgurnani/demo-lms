@@ -22,7 +22,7 @@ const CategorySearch = ({ handleAllotChange }) => {
         const response = await axios.get(`https://demo-lms.vercel.app/book/getBook`);
         const books = response.data;
         console.log(books);
-    
+
         setFilterBooks(books);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -33,10 +33,8 @@ const CategorySearch = ({ handleAllotChange }) => {
     if (bookName !== '') {
       fetchBooks();
     } else {
-      setFilterBooks([]);
+      getBooks(); // Load all books when the search input is empty
     }
-
-    getBooks();
 
   }, [bookName]);
 
@@ -52,6 +50,9 @@ const CategorySearch = ({ handleAllotChange }) => {
     // Call handleBookNameChange with the entered book name
     handleAllotChange(book.name);
   };
+
+  // Filter books by letter on the client side
+  const filteredBooks = filterBooks.filter(book => book.name.toLowerCase().includes(bookName.toLowerCase()));
 
   return (
     <>
@@ -92,8 +93,8 @@ const CategorySearch = ({ handleAllotChange }) => {
                 onChange={(e) => setBookName(e.target.value)}
               />
 
-              {filterBooks.length > 0 ? (
-                filterBooks.map((book) => (
+              {filteredBooks.length > 0 ? (
+                filteredBooks.map((book) => (
                   <p
                     key={book.reg_no}
                     onClick={() => handleChange(book)}
