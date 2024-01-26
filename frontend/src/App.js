@@ -13,12 +13,15 @@ import {
   DialogContent,
   DialogContentText,
   TextField,
+  MenuItem,
+  Menu
 } from "@mui/material";
 import { Dialog } from "@mui/material";
 import logoLogin from "./login_logo1.png";
 import logo from "./Police_logo.png";
 import CategorySearch from "./Components/CategorySearch";
 import Papa from 'papaparse';
+
 
 function App() {
 
@@ -404,21 +407,6 @@ function App() {
   const studentColumns = useMemo(
     () => [
       {
-        accessorKey: 'actions',
-        header: 'Actions',
-        Cell: ({ row }) => (
-          <div>
-            <button onClick={() => handleEditStudent(row.original.id)}>
-              Edit
-            </button>
-            <br />
-            <button onClick={() => handleDeleteStudent(row.original.id)}>
-              Delete
-            </button>
-          </div>
-        ),
-      },
-      {
         accessorKey: "id", //simple recommended way to define a column
         header: "Student ID",
         muiTableHeadCellProps: { sx: { color: "green" } }, //optional custom props
@@ -601,22 +589,6 @@ const handleEditBook = async (reg_no) => {
 
   const bookColumns = useMemo(
     () => [
-      {
-        accessorKey: 'actions',
-        header: 'Actions',
-        Cell: ({ row }) => (
-          <div>
-          <button  onClick={() =>handleEditBook(row.original.reg_no)}>
-            Edit
-          </button>
-          <br />
-            <button onClick={() => deleteBook(row.original.reg_no)}>
-              Delete
-            </button>
-          </div>
-        ),
-      },
-      
       {
         accessorKey: 'reg_no', //simple recommended way to define a column
         header: 'Reg No',
@@ -1222,22 +1194,41 @@ const historyColumns = useMemo(
           </div>
           <div id={tab === "students" ? "display" : "no_display"}>
             <div id="students_table_container" style={{ marginTop: "4%" }}>
-              <MaterialReactTable
-                columns={studentColumns}
-                data={studentObjects}
-                enableColumnOrdering //enable some features
-                enablePagination={true} //disable a default feature //get a reference to the underlying table instance (optional)
-              />
+            <MaterialReactTable
+            columns={studentColumns}
+            data={studentObjects}
+            enableColumnOrdering
+            enablePagination={true}
+            enableRowActions  // Make sure this is set to true
+            renderRowActionMenuItems={({ row }) => [
+              <MenuItem
+              onClick={() => handleEditStudent(row.original.id)}
+              key="edit">Edit</MenuItem>,
+              <MenuItem 
+              onClick={() => handleDeleteStudent(row.original.id)}
+              key="delete">Delete</MenuItem>,
+            ]}
+          />
+          
             </div>
           </div>
           <div id={tab === "books" ? "display" : "no_display"}>
             <div id="students_table_container" style={{ marginTop: "4%" }}>
-              <MaterialReactTable
-                columns={bookColumns}
-                data={bookObjects}
-                enableColumnOrdering //enable some features
-                enablePagination={true}
-              />
+            <MaterialReactTable
+            columns={bookColumns}
+            data={bookObjects}
+            enableColumnOrdering
+            enablePagination={true}
+            enableRowActions  // Make sure this is set to true
+            renderRowActionMenuItems={({ row }) => [
+              <MenuItem
+              onClick={() =>handleEditBook(row.original.reg_no)}
+              key="edit">Edit</MenuItem>,
+              <MenuItem 
+              onClick={() => deleteBook(row.original.reg_no)}
+              key="delete">Delete</MenuItem>,
+            ]}
+          />
             </div>
           </div>
 
