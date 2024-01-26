@@ -17,11 +17,24 @@ const CategorySearch = ({ handleAllotChange }) => {
       }
     }
 
+    const getBooks = async () => {
+      try {
+        const response = await axios.get(`https://demo-lms.vercel.app/book/getBook`);
+        const books = response.data;
+        console.log(books);
+        setFilterBooks(books);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle error appropriately, e.g., show a message to the user
+      }
+    };
+
     if (bookName !== '') {
       fetchBooks();
     } else {
       setFilterBooks([]);
     }
+    getBooks();
   }, [bookName]);
 
   const handleChange = (book) => {
