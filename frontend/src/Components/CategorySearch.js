@@ -22,6 +22,7 @@ const CategorySearch = ({ handleAllotChange }) => {
         const response = await axios.get(`https://demo-lms.vercel.app/book/getBook`);
         const books = response.data;
         console.log(books);
+    
         setFilterBooks(books);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -34,17 +35,19 @@ const CategorySearch = ({ handleAllotChange }) => {
     } else {
       setFilterBooks([]);
     }
+
     getBooks();
+
   }, [bookName]);
 
   const handleChange = (book) => {
     setShowName(book.name);
-    // setBookName('');
+    setBookName('');
     setOpen(false);
 
     // Pass both book_id and book_name to the parent component
-    handleAllotChange({ target: { name: 'bookReg', value: book.reg_no } });
-    handleAllotChange({ target: { name: 'bookName', value: book.name } });
+    handleAllotChange({ target: { name: 'book_id', value: book.reg_no } });
+    handleAllotChange({ target: { name: 'book_name', value: book.name } });
 
     // Call handleBookNameChange with the entered book name
     handleAllotChange(book.name);
