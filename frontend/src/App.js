@@ -1472,6 +1472,11 @@ const historyColumns = useMemo(
                   placeholder="Batch No"
                   value={studentDetails.student_batch}
                   onChange={handleStudentChange}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      handleStudentSubmit(e);
+                    }
+                  }}
                 />
               </div>
               <Button
@@ -1533,6 +1538,11 @@ const historyColumns = useMemo(
                   value={bookDetails.book_quantity}
                   placeholder="Quantity"
                   onChange={handleBookChange}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      handleBookSubmit(e);
+                    }
+                  }}
                 />
               </div>
               <button id="submit" onClick={handleBookSubmit}>
@@ -1610,6 +1620,11 @@ const historyColumns = useMemo(
                   value={allotDetails.expectedReturnDate}
                   onChange={(e) => {
                     setAllotDetails({ ...allotDetails, expectedReturnDate: e.target.value });
+                  }}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      handleAllotSubmit(e);
+                    }
                   }}
                 />
               </div>
