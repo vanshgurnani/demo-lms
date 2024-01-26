@@ -88,9 +88,9 @@ function App() {
   const [allotDetails, setAllotDetails] = useState({
     studentId: "",  // Match the key names with the data structure
     studentName: "",
-    bookId: null,
-    bookReg: null,
-    bookName: "",
+    bookId: 0,
+    bookReg: 0,
+    bookName: '',
     borrowedDate: 0,
     expectedReturnDate: 0,
     return_status: false,
@@ -756,7 +756,7 @@ const handleEditBook = async (reg_no) => {
           // Update the state with the fetched book ID
           setAllotDetails((prevDetails) => ({
             ...prevDetails,
-            bookId: book ? book.reg_no : "", // Set to null if book not found
+            bookId: book ? book.reg_no : null, // Set to null if book not found
           }));
         } catch (error) {
           console.error('Error fetching book details:', error);
@@ -844,13 +844,19 @@ const historyColumns = useMemo(
         accessorKey: "borrowedDate", //simple recommended way to define a column
         header: "Borrowed Date",
         muiTableHeadCellProps: { sx: { color: "green" } }, //optional custom props
-        Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
+        Cell: ({ cell }) => 
+        <span>
+        {new Date(cell.getValue()).toLocaleDateString()}
+        </span>, //optional custom cell render
       },
       {
         accessorKey: "expectedReturnDate", //simple recommended way to define a column
         header: "Expected Return Date",
         muiTableHeadCellProps: { sx: { color: "green" } }, //optional custom props
-        Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
+        Cell: ({ cell }) => 
+        <span>
+        {new Date(cell.getValue()).toLocaleDateString()}
+        </span>, //optional custom cell render
       },
       {
         accessorKey: "return_status", //simple recommended way to define a column
