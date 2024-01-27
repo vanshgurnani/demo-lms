@@ -93,10 +93,9 @@ function App() {
   const [allotDetails, setAllotDetails] = useState({
     studentId: "",  // Match the key names with the data structure
     studentName: "",
-    studentRole: "",
-    bookId: 0,
-    bookReg: 0,
-    bookName: '',
+    bookId: null,
+    bookReg: null,
+    bookName: "",
     borrowedDate: 0,
     expectedReturnDate: 0,
     return_status: false,
@@ -703,16 +702,14 @@ const handleEditBook = async (reg_no) => {
     if (
       allotDetails.studentId !== "" &&
       allotDetails.studentName !== "" &&
-      allotDetails.studentRole !== "" &&
       allotDetails.bookName !== "" &&
       allotDetails.bookId !== "" &&
       allotDetails.borrowedDate !== "" &&
       allotDetails.expectedReturnDate !== ""
       ) {
         try {
-          // https://demo-lms.vercel.app
           // Make a POST request to your Express server
-          const response = await axios.post('https://demo-lms.vercel.app/allot/postAllotBook', {
+          const response = await axios.post('http://localhost:5000/allot/postAllotBook', {
             studentId: allotDetails.studentId,
             studentName: allotDetails.studentName,
             studentRole: allotDetails.studentRole,
@@ -753,15 +750,14 @@ const handleEditBook = async (reg_no) => {
       if (enteredStudentId) {
         try {
           // Make an API call to fetch student details based on the ID
-          const response = await axios.get(`https://demo-lms.vercel.app/student/getId/${enteredStudentId}`);
+          const response = await axios.get(`http://localhost:5000/student/getId/${enteredStudentId}`);
           const student = response.data;
     
           // Update the state with the fetched student name
           setAllotDetails((prevDetails) => ({
             ...prevDetails,
             studentName: student ? student.name : "", // Set to an empty string if student not found
-            studentRole: student ? student.role : "", // Set to an empty string if student
-
+            studentRole : student ? student.role : ""
           }));
         } catch (error) {
           console.error('Error fetching student details:', error);
@@ -778,18 +774,14 @@ const handleEditBook = async (reg_no) => {
     
       if (enteredBookName) {
         try {
-          const response = await axios.get(`https://demo-lms.vercel.app/book/getBookByName/${enteredBookName}`);
-          
-          console.log('API Response:', response);
+          // Make an API call to fetch book details based on the name
+          const response = await axios.get(`http://localhost:5000/book/getBookByName/${enteredBookName}`);
           const book = response.data;
-    
-          console.log('Entered Book Name:', enteredBookName);
-          console.log('Fetched Book:', book);
     
           // Update the state with the fetched book ID
           setAllotDetails((prevDetails) => ({
             ...prevDetails,
-            bookId: book ? book.reg_no : null, // Set to null if book not found
+            bookId: book ? book.reg_no : "", // Set to null if book not found
           }));
         } catch (error) {
           console.error('Error fetching book details:', error);
@@ -799,8 +791,6 @@ const handleEditBook = async (reg_no) => {
         setAllotDetails((prevDetails) => ({ ...prevDetails, bookId: null }));
       }
     };
-    
-
 
 
     const handleChangeReturnStatus = async (studentId) => {
