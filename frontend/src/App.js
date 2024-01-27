@@ -709,7 +709,7 @@ const handleEditBook = async (reg_no) => {
       ) {
         try {
           // Make a POST request to your Express server
-          const response = await axios.post('https://demo-lms.vercel.app/allot/postAllotBook', {
+          const response = await axios.post('http://localhost:5000/allot/postAllotBook', {
             studentId: allotDetails.studentId,
             studentName: allotDetails.studentName,
             studentRole: allotDetails.studentRole,
@@ -774,23 +774,23 @@ const handleEditBook = async (reg_no) => {
     
       if (enteredBookName) {
         try {
-          // Make an API call to fetch book details based on the name
-          const response = await axios.get(`https://demo-lms.vercel.app/book/getBookByName/${enteredBookName}`);
+          const response = await axios.get(`http://localhost:5000/book/getBookByName/${enteredBookName}`);
           const book = response.data;
     
           // Update the state with the fetched book ID
           setAllotDetails((prevDetails) => ({
             ...prevDetails,
-            bookId: book ? book.reg_no : "", // Set to null if book not found
+            bookId: book ? book.reg_no : null,
           }));
         } catch (error) {
           console.error('Error fetching book details:', error);
         }
       } else {
-        // Clear the bookId if the entered name is empty
-        setAllotDetails((prevDetails) => ({ ...prevDetails, bookId: null }));
+        // Clear the bookId and bookName if the entered name is empty
+        setAllotDetails((prevDetails) => ({ ...prevDetails, bookId: null, bookName: null }));
       }
     };
+    
 
 
     const handleChangeReturnStatus = async (studentId) => {
