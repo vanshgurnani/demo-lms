@@ -74,7 +74,7 @@ router.get('/getFilteredAllot', async (req, res) => {
 
 router.post('/postAllotBook', async (req, res) => {
   try {
-    const { studentId, studentName, bookName, bookId, borrowedDate, expectedReturnDate, return_status } = req.body;
+    const { studentId, studentName, studentRole, bookName, bookId, borrowedDate, expectedReturnDate, return_status } = req.body;
 
     // Check if the book is available
     const allottedBook = await Book.findOne({ reg_no: bookId });
@@ -90,6 +90,7 @@ router.post('/postAllotBook', async (req, res) => {
     const newAllotment = new Allot({
       studentId,
       studentName,
+      studentRole,
       bookName,
       bookId,
       borrowedDate,

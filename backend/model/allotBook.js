@@ -10,6 +10,10 @@ const allotBookSchema = new Schema({
     type: String,
     required: true,
   },
+  studentRole: {
+    type: String,
+    required: true,
+  },
   bookName: {
     type: String,
     required: true,

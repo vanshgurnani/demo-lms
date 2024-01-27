@@ -61,6 +61,7 @@ function App() {
     student_id: "",
     student_name: "",
     student_phone: "",
+    studebt_role: "",
     student_batch: "",
     student_id_db: "",
   });
@@ -91,6 +92,7 @@ function App() {
   const [allotDetails, setAllotDetails] = useState({
     studentId: "",  // Match the key names with the data structure
     studentName: "",
+    studentRole: "",
     bookId: 0,
     bookReg: 0,
     bookName: '',
@@ -301,9 +303,9 @@ function App() {
 
   // get student
 
-  const getStudents = async (page = 1) => {
+  const getStudents = async (role) => {
     try {
-      const response = await axios.get(`https://demo-lms.vercel.app/student/getStudent`);
+      const response = await axios.get(`https://demo-lms.vercel.app/student/getRole/${role}`);
       const students = response.data;
       console.log(students);
   
@@ -658,6 +660,7 @@ const handleEditBook = async (reg_no) => {
     if (
       allotDetails.studentId !== "" &&
       allotDetails.studentName !== "" &&
+      allotDetails.studentRole !== "" &&
       allotDetails.bookName !== "" &&
       allotDetails.bookId !== "" &&
       allotDetails.borrowedDate !== "" &&
@@ -668,6 +671,7 @@ const handleEditBook = async (reg_no) => {
           const response = await axios.post('https://demo-lms.vercel.app/allot/postAllotBook', {
             studentId: allotDetails.studentId,
             studentName: allotDetails.studentName,
+            studentName: allotDetails.studentRole,
             bookName: allotDetails.bookName,
             bookId: allotDetails.bookId,
             borrowedDate: allotDetails.borrowedDate,
@@ -683,6 +687,7 @@ const handleEditBook = async (reg_no) => {
           setAllotDetails({
             studentId: "",
             studentName: "",
+            studentRole: "",
             bookName: "",
             bookId: "",
             borrowedDate: "",
@@ -711,6 +716,8 @@ const handleEditBook = async (reg_no) => {
           setAllotDetails((prevDetails) => ({
             ...prevDetails,
             studentName: student ? student.name : "", // Set to an empty string if student not found
+            studentRole: student ? student.role : "", // Set to an empty string if student
+
           }));
         } catch (error) {
           console.error('Error fetching student details:', error);
@@ -1150,10 +1157,17 @@ const historyColumns = useMemo(
             </div>
             <div
               id={tab === "login" ? "no_display" : "sidebar_option"}
-              onClick={() => [getStudents(), setTab("students")]}
+              onClick={() => [getStudents("student"), setTab("students")]}
               className={` ${tab === "students" ? "bg-white !text-black" : "" }`}
             >
               Students List
+            </div>
+            <div
+              id={tab === "login" ? "no_display" : "sidebar_option"}
+              onClick={() => [getStudents("staff"), setTab("staff")]}
+              className={` ${tab === "staff" ? "bg-white !text-black" : "" }`}
+            >
+              Staff List
             </div>
             <div
               id={tab === "login" ? "no_display" : "sidebar_option"}
@@ -1218,6 +1232,29 @@ const historyColumns = useMemo(
           
             </div>
           </div>
+
+          <div id={tab === "staff" ? "display" : "no_display"}>
+            <div id="students_table_container" style={{ marginTop: "4%" }}>
+            <MaterialReactTable
+            columns={studentColumns}
+            data={studentObjects}
+            enableColumnOrdering
+            enablePagination={true}
+            enableRowActions  // Make sure this is set to true
+            renderRowActionMenuItems={({ row }) => [
+              <MenuItem
+              onClick={() => handleEditStudent(row.original.id)}
+              key="edit">Edit</MenuItem>,
+              <MenuItem 
+              onClick={() => handleDeleteStudent(row.original.id)}
+              key="delete">Delete</MenuItem>,
+            ]}
+          />
+          
+            </div>
+          </div>
+
+
           <div id={tab === "books" ? "display" : "no_display"}>
             <div id="students_table_container" style={{ marginTop: "4%" }}>
             <MaterialReactTable
@@ -1578,6 +1615,16 @@ const historyColumns = useMemo(
                   name="studentName"
                   placeholder="Student Name"
                   value={allotDetails.studentName}
+                  readOnly
+                />
+              </div>
+              <div style={{ marginTop: "5%" }}>
+                <label for="name">Role Name</label>
+                <input
+                  type="text"
+                  name="studentRole"
+                  placeholder="Student Role"
+                  value={allotDetails.studentRole}
                   readOnly
                 />
               </div>
