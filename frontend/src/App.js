@@ -709,7 +709,7 @@ const handleEditBook = async (reg_no) => {
       ) {
         try {
           // Make a POST request to your Express server
-          const response = await axios.post('http://localhost:5000/allot/postAllotBook', {
+          const response = await axios.post('https://demo-lms.vercel.app/allot/postAllotBook', {
             studentId: allotDetails.studentId,
             studentName: allotDetails.studentName,
             studentRole: allotDetails.studentRole,
@@ -774,7 +774,7 @@ const handleEditBook = async (reg_no) => {
     
       if (enteredBookName) {
         try {
-          const response = await axios.get(`http://localhost:5000/book/getBookByName/${enteredBookName}`);
+          const response = await axios.get(`https://demo-lms.vercel.app/book/getBookByName/${enteredBookName}`);
           const book = response.data;
     
           // Update the state with the fetched book ID
