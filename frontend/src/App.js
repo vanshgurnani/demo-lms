@@ -778,9 +778,13 @@ const handleEditBook = async (reg_no) => {
     
       if (enteredBookName) {
         try {
-          // Make an API call to fetch book details based on the name
           const response = await axios.get(`https://demo-lms.vercel.app/book/getBookByName/${enteredBookName}`);
+          
+          console.log('API Response:', response);
           const book = response.data;
+    
+          console.log('Entered Book Name:', enteredBookName);
+          console.log('Fetched Book:', book);
     
           // Update the state with the fetched book ID
           setAllotDetails((prevDetails) => ({
@@ -795,6 +799,7 @@ const handleEditBook = async (reg_no) => {
         setAllotDetails((prevDetails) => ({ ...prevDetails, bookId: null }));
       }
     };
+    
 
 
 
