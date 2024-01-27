@@ -1698,15 +1698,15 @@ const historyColumns = useMemo(
               </div>
               <div style={{ marginTop: "5%" }}>
                 <label for="name">Book Name</label>
-                <CategorySearch allotBooksList={allotBooksList} handleAllotChange={handleBookNameChange}  />
+                {/*<CategorySearch allotBooksList={allotBooksList} handleAllotChange={handleBookNameChange}  />*/}
 
-                {/*<input
+                <input
                   type="text"
                   name="bookName"
                   placeholder="Book Name"
                   value={allotDetails.bookName}
                   onChange={(e) => handleBookNameChange(e.target.value)}
-              />*/}
+              />
 
               </div>
 

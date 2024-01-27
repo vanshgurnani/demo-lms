@@ -10,56 +10,32 @@ const CategorySearch = ({ handleAllotChange }) => {
   useEffect(() => {
     async function fetchBooks() {
       try {
-        const response = await axios.get(`https://demo-lms.vercel.app/book/getBookByName/${bookName}`);
-        setFilterBooks((prevBooks) => {
-          // Keep the existing books and add the new result to the array
-          return response.data ? [...prevBooks, response.data] : prevBooks;
-        });
+        const response = await axios.get(`http://localhost:5000/book/getBookByName/${bookName}`);
+        setFilterBooks(response.data ? [response.data] : []);
       } catch (error) {
         console.error('Error fetching books:', error);
       }
     }
-    
-
-    const getBooks = async () => {
-      try {
-        const response = await axios.get(`https://demo-lms.vercel.app/book/getBook`);
-        const books = response.data;
-        console.log(books);
-
-        setFilterBooks(books);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        // Handle error appropriately, e.g., show a message to the user
-      }
-    };
 
     if (bookName !== '') {
       fetchBooks();
     } else {
-      getBooks(); // Load all books when the search input is empty
+      setFilterBooks([]);
     }
-
   }, [bookName]);
 
   const handleChange = (book) => {
     setShowName(book.name);
+    setBookName('');
     setOpen(false);
-  
+
     // Pass both book_id and book_name to the parent component
     handleAllotChange({ target: { name: 'book_id', value: book.reg_no } });
     handleAllotChange({ target: { name: 'book_name', value: book.name } });
-  
-    // You can choose whether to clear the search term or not
-    // setBookName('');
-  
+
     // Call handleBookNameChange with the entered book name
     handleAllotChange(book.name);
   };
-  
-
-  // Filter books by letter on the client side
-  const filteredBooks = filterBooks.filter(book => book.name.toLowerCase().includes(bookName.toLowerCase()));
 
   return (
     <>
@@ -100,8 +76,8 @@ const CategorySearch = ({ handleAllotChange }) => {
                 onChange={(e) => setBookName(e.target.value)}
               />
 
-              {filteredBooks.length > 0 ? (
-                filteredBooks.map((book) => (
+              {filterBooks.length > 0 ? (
+                filterBooks.map((book) => (
                   <p
                     key={book.reg_no}
                     onClick={() => handleChange(book)}
