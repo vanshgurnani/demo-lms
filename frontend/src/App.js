@@ -263,8 +263,7 @@ function App() {
         studentDetails.student_id !== "" &&
         studentDetails.student_name !== "" &&
         studentDetails.student_role !== "" &&
-        studentDetails.student_phone !== "" &&
-        studentDetails.student_batch !== ""
+        studentDetails.student_phone !== "" 
     ) {
         if (!studentDetails.student_phone.match(/^(\+\d{1,2}\s)?[6-9]\d{9}$/)) {
             mobileNumberInvalid = false;
@@ -448,6 +447,37 @@ function App() {
       {
         accessorKey: "batch", //simple recommended way to define a column
         header: "Batch",
+        muiTableHeadCellProps: { sx: { color: "green" } }, //optional custom props
+        Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
+      }
+    ],
+    []
+  );
+
+
+  const staffColumns = useMemo(
+    () => [
+      {
+        accessorKey: "id", //simple recommended way to define a column
+        header: "Student ID",
+        muiTableHeadCellProps: { sx: { color: "green" } }, //optional custom props
+        Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
+      },
+      {
+        accessorKey: "name", //simple recommended way to define a column
+        header: "Name",
+        muiTableHeadCellProps: { sx: { color: "green" } }, //optional custom props
+        Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
+      },
+      {
+        accessorKey: "phone", //simple recommended way to define a column
+        header: "Phone",
+        muiTableHeadCellProps: { sx: { color: "green" } }, //optional custom props
+        Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
+      },
+      {
+        accessorKey: "role", //simple recommended way to define a column
+        header: "Role",
         muiTableHeadCellProps: { sx: { color: "green" } }, //optional custom props
         Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
       }
@@ -1256,7 +1286,7 @@ const historyColumns = useMemo(
           <div id={tab === "staff" ? "display" : "no_display"}>
             <div id="students_table_container" style={{ marginTop: "4%" }}>
             <MaterialReactTable
-            columns={studentColumns}
+            columns={staffColumns}
             data={studentObjects}
             enableColumnOrdering
             enablePagination={true}
@@ -1474,6 +1504,25 @@ const historyColumns = useMemo(
           >
             {/* student details */}
             <form id="form">
+
+            <div style={{ marginTop: "5%"}}>
+                <label for="name">Select Role</label>
+                <br />
+                <select
+                  required
+                  name="student_role"
+                  value={studentDetails.student_role}
+                  onChange={handleStudentChange}
+                  style={{ border: "1px solid #ccc",width:"485px", borderRadius: "4px" }}
+                  
+
+                >
+                  <option value="">Select Role</option>
+                  <option value="staff">Staff</option>
+                  <option value="student">Student</option>
+                </select>
+              </div>
+
               <div style={{ marginTop: "5%" }}>
                 <label for="name">Student ID</label>
                 <input
@@ -1507,25 +1556,6 @@ const historyColumns = useMemo(
                 />
               </div>
 
-              <div style={{ marginTop: "5%"}}>
-                <label for="name">Select Role</label>
-                <br />
-                <select
-                  required
-                  name="student_role"
-                  value={studentDetails.student_role}
-                  onChange={handleStudentChange}
-                  style={{ border: "1px solid #ccc",width:"485px", borderRadius: "4px" }}
-                  
-
-                >
-                  <option value="">Select Role</option>
-                  <option value="staff">Staff</option>
-                  <option value="student">Student</option>
-                </select>
-              </div>
-
-
               <div style={{ marginTop: "5%" }}>
                 <label for="name">Student Phone</label>
                 <input
@@ -1546,22 +1576,24 @@ const historyColumns = useMemo(
                   Invalid Number
                 </p>
               </div>
-              <div style={{ marginTop: "5%" }}>
-                <label for="name">Student Batch</label>
-                <input
-                  required
-                  type="text"
-                  name="student_batch"
-                  placeholder="Batch No"
-                  value={studentDetails.student_batch}
-                  onChange={handleStudentChange}
-                  onKeyPress={(e) => {
-                    if (e.key === "Enter") {
-                      handleStudentSubmit(e);
-                    }
-                  }}
-                />
-              </div>
+              {studentDetails.student_role === 'student' && (
+                <div style={{ marginTop: "5%" }}>
+                  <label htmlFor="name">Student Batch</label>
+                  <input
+                    required
+                    type="text"
+                    name="student_batch"
+                    placeholder="Batch No"
+                    value={studentDetails.student_batch}
+                    onChange={handleStudentChange}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        handleStudentSubmit(e);
+                      }
+                    }}
+                  />
+                </div>
+              )}
               <Button
                 id="submit"
                 disabled={!studentSubmit}
