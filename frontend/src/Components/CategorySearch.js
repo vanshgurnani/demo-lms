@@ -11,11 +11,15 @@ const CategorySearch = ({ handleAllotChange }) => {
     async function fetchBooks() {
       try {
         const response = await axios.get(`https://demo-lms.vercel.app/book/getBookByName/${bookName}`);
-        setFilterBooks(response.data ? [response.data] : []);
+        setFilterBooks((prevBooks) => {
+          // Keep the existing books and add the new result to the array
+          return response.data ? [...prevBooks, response.data] : prevBooks;
+        });
       } catch (error) {
         console.error('Error fetching books:', error);
       }
     }
+    
 
     const getBooks = async () => {
       try {
@@ -40,16 +44,19 @@ const CategorySearch = ({ handleAllotChange }) => {
 
   const handleChange = (book) => {
     setShowName(book.name);
-    setBookName('');
     setOpen(false);
-
+  
     // Pass both book_id and book_name to the parent component
     handleAllotChange({ target: { name: 'book_id', value: book.reg_no } });
     handleAllotChange({ target: { name: 'book_name', value: book.name } });
-
+  
+    // You can choose whether to clear the search term or not
+    // setBookName('');
+  
     // Call handleBookNameChange with the entered book name
     handleAllotChange(book.name);
   };
+  
 
   // Filter books by letter on the client side
   const filteredBooks = filterBooks.filter(book => book.name.toLowerCase().includes(bookName.toLowerCase()));
