@@ -1264,6 +1264,7 @@ const historyColumns = useMemo(
           </div>
           <div id={tab === "students" ? "display" : "no_display"}>
             <div id="students_table_container" style={{ marginTop: "4%" }}>
+            
             <MaterialReactTable
             columns={studentColumns}
             data={studentObjects}
