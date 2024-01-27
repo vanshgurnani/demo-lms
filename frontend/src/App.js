@@ -61,7 +61,7 @@ function App() {
     student_id: "",
     student_name: "",
     student_phone: "",
-    studebt_role: "",
+    student_role: "",
     student_batch: "",
     student_id_db: "",
   });
@@ -83,6 +83,7 @@ function App() {
   const [editStudentDetails, setEditStudentDetails] = useState({
     student_id: "",
     student_name: "",
+    student_role: "",
     student_phone: "",
     student_batch: "",
     student_id_db: "",
@@ -261,6 +262,7 @@ function App() {
     if (
         studentDetails.student_id !== "" &&
         studentDetails.student_name !== "" &&
+        studentDetails.student_role !== "" &&
         studentDetails.student_phone !== "" &&
         studentDetails.student_batch !== ""
     ) {
@@ -269,24 +271,35 @@ function App() {
             alert("Enter a valid number");
         } else {
             try {
+              // https://demo-lms.vercel.app
                 console.log("studentDetails before ---->", studentDetails);
 
                 // Make a POST request to your Express server
                 const response = await axios.post('https://demo-lms.vercel.app/student/postStudent', {
                     id: studentDetails.student_id,
                     name: studentDetails.student_name,
-                    role: 'student',  // Assuming 'role' is a required field and set it to 'student'
+                    role: studentDetails.student_role ,  // Assuming 'role' is a required field and set it to 'student'
                     phone: studentDetails.student_phone,
                     batch: studentDetails.student_batch,
                 });
 
                 console.log('MongoDB API Response:', response.data);
 
-                getStudents();
-                setTab("students");
+                // Get the list of students based on the role
+                getStudents(studentDetails.student_role);
+
+                // Set the tab based on the role
+                if (studentDetails.student_role === "staff") {
+                  setTab("staff");
+                } else {
+                  setTab("students");
+                }
+
+
                 setStudentDetails({
                     student_id: "",
                     student_name: "",
+                    student_role: "",
                     student_phone: "",
                     student_batch: "",
                     student_id_db: "",
@@ -669,7 +682,7 @@ const handleEditBook = async (reg_no) => {
         try {
           // https://demo-lms.vercel.app
           // Make a POST request to your Express server
-          const response = await axios.post('http://localhost:5000/allot/postAllotBook', {
+          const response = await axios.post('https://demo-lms.vercel.app/allot/postAllotBook', {
             studentId: allotDetails.studentId,
             studentName: allotDetails.studentName,
             studentRole: allotDetails.studentRole,
@@ -736,7 +749,7 @@ const handleEditBook = async (reg_no) => {
       if (enteredBookName) {
         try {
           // Make an API call to fetch book details based on the name
-          const response = await axios.get(`http://localhost:5000/book/getBookByName/${enteredBookName}`);
+          const response = await axios.get(`https://demo-lms.vercel.app/book/getBookByName/${enteredBookName}`);
           const book = response.data;
     
           // Update the state with the fetched book ID
@@ -1493,6 +1506,26 @@ const historyColumns = useMemo(
                   onChange={handleStudentChange}
                 />
               </div>
+
+              <div style={{ marginTop: "5%"}}>
+                <label for="name">Select Role</label>
+                <br />
+                <select
+                  required
+                  name="student_role"
+                  value={studentDetails.student_role}
+                  onChange={handleStudentChange}
+                  style={{ border: "1px solid #ccc",width:"485px", borderRadius: "4px" }}
+                  
+
+                >
+                  <option value="">Select Role</option>
+                  <option value="staff">Staff</option>
+                  <option value="student">Student</option>
+                </select>
+              </div>
+
+
               <div style={{ marginTop: "5%" }}>
                 <label for="name">Student Phone</label>
                 <input
