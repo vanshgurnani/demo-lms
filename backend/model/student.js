@@ -19,7 +19,6 @@ const studentSchema = new Schema({
   },
   batch: {
     type: String,
-    required: true,
   }
 });
 
