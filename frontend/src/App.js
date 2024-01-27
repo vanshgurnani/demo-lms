@@ -425,6 +425,12 @@ function App() {
         Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
       },
       {
+        accessorKey: "role", //simple recommended way to define a column
+        header: "Role",
+        muiTableHeadCellProps: { sx: { color: "green" } }, //optional custom props
+        Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
+      },
+      {
         accessorKey: "batch", //simple recommended way to define a column
         header: "Batch",
         muiTableHeadCellProps: { sx: { color: "green" } }, //optional custom props
