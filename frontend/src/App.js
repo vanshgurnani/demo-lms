@@ -1767,7 +1767,7 @@ const historyColumns = useMemo(
           >
             <div className="add_type">
               <div className="add_button">
-                <button className="adding_button"onClick={() => setTab("add_student")}>
+                <button className="adding_button" onClick={() => setTab("add_student")}>
                   Add a student
                 </button>
               </div>
