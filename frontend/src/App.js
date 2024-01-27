@@ -667,11 +667,12 @@ const handleEditBook = async (reg_no) => {
       allotDetails.expectedReturnDate !== ""
       ) {
         try {
+          // https://demo-lms.vercel.app
           // Make a POST request to your Express server
-          const response = await axios.post('https://demo-lms.vercel.app/allot/postAllotBook', {
+          const response = await axios.post('http://localhost:5000/allot/postAllotBook', {
             studentId: allotDetails.studentId,
             studentName: allotDetails.studentName,
-            studentName: allotDetails.studentRole,
+            studentRole: allotDetails.studentRole,
             bookName: allotDetails.bookName,
             bookId: allotDetails.bookId,
             borrowedDate: allotDetails.borrowedDate,
@@ -735,7 +736,7 @@ const handleEditBook = async (reg_no) => {
       if (enteredBookName) {
         try {
           // Make an API call to fetch book details based on the name
-          const response = await axios.get(`https://demo-lms.vercel.app/book/getBookByName/${enteredBookName}`);
+          const response = await axios.get(`http://localhost:5000/book/getBookByName/${enteredBookName}`);
           const book = response.data;
     
           // Update the state with the fetched book ID
@@ -816,6 +817,12 @@ const historyColumns = useMemo(
       {
         accessorKey: "studentName", //simple recommended way to define a column
         header: "Student Name",
+        muiTableHeadCellProps: { sx: { color: "green" } }, //optional custom props
+        Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
+      },
+      {
+        accessorKey: "studentRole", //simple recommended way to define a column
+        header: "Student Role",
         muiTableHeadCellProps: { sx: { color: "green" } }, //optional custom props
         Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
       },
