@@ -129,6 +129,37 @@ router.post('/postBook', async (req, res) => {
     }
 })
 
+router.get('/validateReg/:reg_no', async (req, res) => {
+  try {
+    const bookId = req.params.reg_no;
+    const book = await Book.findOne({ reg_no: bookId });
+
+    // If a student is found, the ID is taken; otherwise, it's available
+    const isIdTaken = !!book;
+
+    res.json({ isIdTaken });
+  } catch (error) {
+    console.error('Error validating book ID:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.get('/validateName/:name',async (req,res)=>{
+  try{
+      const Name = req.params.name;
+      const book = await Book.findOne({ name: Name });
+
+      const isIdTaken = !!book;
+
+
+      res.json({ isIdTaken });
+  }
+  catch(error){
+      console.error('Error fetching:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
 
 
 

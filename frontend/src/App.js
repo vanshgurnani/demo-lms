@@ -35,6 +35,7 @@ function App() {
   const [searchAllotId, setSearchAllotId] = useState("");
   const [allotStudentName, setAllotStudentName] = useState("");
   const [addStudentError, setAddStudentError] = useState("");
+  const [addBookError, setAddBookError] = useState("");
   const [studentSubmit, setStudentSubmit] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [openStudent, setOpenStudent] = React.useState(false);
@@ -184,12 +185,71 @@ function App() {
   // allot form onchange
 
   
-  function bookExistsance(event) {
-    ifBookExists = books.find((book) => book.book_name == event.target.value);
-    if (ifBookExists) {
-      alert("book exists");
+  async function bookExistenceName(event) {
+    const bookName = event.target.value;
+  
+    try {
+      const response = await axios.get(`https://demo-lms.vercel.app/book/validateName/${bookName}`);
+      const {isIdTaken} = response.data;
+  
+      if (isIdTaken) {
+        setAddBookError('Book exists');
+      } else {
+        console.log('Book does not exist');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      console.log('Error checking book existence');
     }
   } 
+
+  async function bookExistenceId(event){
+    const reg_no = event.target.value;
+
+    try {
+      const response = await axios.get(`https://demo-lms.vercel.app/book/validateReg/${reg_no}`);
+      const {isIdTaken} = response.data;
+  
+      if (isIdTaken) {
+        setAddBookError('Book registration exists');
+      } else {
+        setAddBookError('Book is available');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      console.log('Error checking book existence');
+    }
+
+
+
+  }
+
+
+  async function studentExistenceId(event) {
+    const student_id = event.target.value;
+  
+    try {
+      const response = await axios.get(`https://demo-lms.vercel.app/student/validateId/${student_id}`);
+      const { isIdTaken } = response.data;
+  
+      if (isIdTaken) {
+        setAddStudentError('ID is taken');
+        // Handle ID taken logic (e.g., show an error message)
+      } else {
+        setAddStudentError('ID is available');
+        // Handle ID available logic
+      }
+    } catch (error) {
+      console.error('Error validating student ID:', error);
+      // Handle error (e.g., show an error message)
+    }
+  }
+  
+
+
+  
+
+
 
   // student table 
   const studentTable = () => {
@@ -1072,6 +1132,8 @@ const historyColumns = useMemo(
     }
   };
 
+  
+
   const LoginFun = () => {
     let username = "admin";
     let password = "admin@123";
@@ -1528,8 +1590,9 @@ const historyColumns = useMemo(
                   placeholder="Student ID"
                   value={studentDetails.student_id}
                   onChange={handleStudentChange}
+                  onInput={studentExistenceId}
                 />
-                {/*<p
+                <p
                   style={{
                     marginLeft: "5%",
                     marginBottom: "0",
@@ -1538,7 +1601,7 @@ const historyColumns = useMemo(
                   id="student_error"
                 >
                   {addStudentError}
-                </p>*/}
+                </p>
               </div>
               <div style={{ marginTop: "5%" }}>
                 <label for="name">Student Name</label>
@@ -1613,8 +1676,18 @@ const historyColumns = useMemo(
                   placeholder="Name"
                   value={bookDetails.book_name}
                   onChange={handleBookChange}
-                  onInput={bookExistsance}
+                  onInput={bookExistenceName}
                 />
+                <p
+                  style={{
+                    marginLeft: "5%",
+                    marginBottom: "0",
+                    marginTop: "0",
+                  }}
+                  id="student_error"
+                >
+                  {addBookError}
+                </p>
               </div>
 
               <div style={{ marginTop: "5%" }}>
@@ -1626,8 +1699,18 @@ const historyColumns = useMemo(
                   placeholder="Enter a number"
                   value={bookDetails.book_reg}
                   onChange={handleBookChange}
-                  onInput={bookExistsance}
+                  onInput={bookExistenceId}
                 />
+                <p
+                  style={{
+                    marginLeft: "5%",
+                    marginBottom: "0",
+                    marginTop: "0",
+                  }}
+                  id="student_error"
+                >
+                  {addBookError}
+                </p>
               </div>
               <div style={{ marginTop: "5%" }}>
                 <label for="name">Book Price</label>

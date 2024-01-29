@@ -29,17 +29,21 @@ router.get('/getStudent',async (req,res)=>{
     }
 })
 
-router.get('/getId/:id',async (req,res)=>{
-  try{
-      const id = req.params.id;
-      const student = await Student.find({id});
-      res.json(student);
+router.get('/validateId/:id', async (req, res) => {
+  try {
+    const studentId = req.params.id;
+    const student = await Student.findOne({ id: studentId });
+
+    // If a student is found, the ID is taken; otherwise, it's available
+    const isIdTaken = !!student;
+
+    res.json({ isIdTaken });
+  } catch (error) {
+    console.error('Error validating student ID:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-  catch(error){
-      console.error('Error fetching:', error);
-      res.status(500).json({ error: 'Internal server error' });
-  }
-})
+});
+
 
 router.get('/getRole/:role',async (req,res)=>{
     try{
