@@ -19,7 +19,7 @@ router.get('/',async (req,res)=>{
 
 router.get('/getBook',async (req,res)=>{
     try{
-        const book = await Book.find({});
+        const book = await Book.find({}).sort({reg_no:1});
     
         res.json(book);
     }

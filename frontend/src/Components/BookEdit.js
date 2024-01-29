@@ -128,6 +128,11 @@ export default function Dashboard() {
                         value: lending - remaining,
                         color: "#efc2f9",
                       },
+                      {
+                        id: 2,
+                        value: lending ,
+                        color: "#800080",
+                      },
                     ],
                   },
                 ]}
@@ -144,7 +149,7 @@ export default function Dashboard() {
                 className="color"
                 style={{ backgroundColor: "#9656A1" }}
               ></div>
-              <p>Remaining Books - ({remaining})</p>
+              <p>Available Books - ({remaining})</p>
             </div>
             <div className="flex">
               <div
@@ -152,6 +157,13 @@ export default function Dashboard() {
                 style={{ backgroundColor: "#efc2f9" }}
               ></div>
               <p>Returned Books - ({lending - remaining})</p>
+            </div>
+            <div className="flex">
+              <div
+                className="color"
+                style={{ backgroundColor: "#800080" }}
+              ></div>
+              <p>Lended Books - ({lending})</p>
             </div>
           </div>
         </div>

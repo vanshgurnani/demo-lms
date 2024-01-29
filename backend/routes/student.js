@@ -29,10 +29,22 @@ router.get('/getStudent',async (req,res)=>{
     }
 })
 
+router.get('/getId/:id',async (req,res)=>{
+  try{
+      const id = req.params.id;
+      const student = await Student.find({id});
+      res.json(student);
+  }
+  catch(error){
+      console.error('Error fetching:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
 router.get('/getRole/:role',async (req,res)=>{
     try{
         const role = req.params.role;
-        const student = await Student.find({role});
+        const student = await Student.find({role}).sort({id:1});
         res.json(student);
     }
     catch(error){

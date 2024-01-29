@@ -22,7 +22,7 @@ router.get('/',async (req,res)=>{
 
 router.get('/getAllot', async (req,res)=>{
     try{
-        const allot = await Allot.find({});
+        const allot = await Allot.find({}).sort({studentId:1});
         res.json(allot);
     }
     catch(error){
