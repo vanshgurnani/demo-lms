@@ -965,7 +965,7 @@ const historyColumns = useMemo(
             >
 
               <option value="true">Returned</option>
-              <option value="false" disabled={isReturned}>Pending</option>
+              <option value="false" disabled>Pending</option>
             </select>
           );
         },
