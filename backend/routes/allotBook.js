@@ -77,11 +77,11 @@ router.post('/postAllotBook', async (req, res) => {
     const { studentId, studentName, studentRole, bookName, bookId, borrowedDate, expectedReturnDate, return_status } = req.body;
 
     // Check if the book is available
-    const allottedBook = await Book.findOne({ reg_no: bookId });
+    const allottedBook = await Book.findOne({ name: bookName });
 
     console.log('Allotted Book:', allottedBook);
 
-    if (!allottedBook || isNaN(allottedBook.available) || allottedBook.available <= 0) {
+    if (!allottedBook || isNaN(allottedBook.quantity) || allottedBook.quantity <= 0) {
       console.log('Book not available for allotment');
       return res.status(400).json({ message: 'Book not available for allotment' });
     }

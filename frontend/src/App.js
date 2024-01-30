@@ -96,7 +96,7 @@ function App() {
     studentName: "",
     bookId: null,
     bookReg: null,
-    bookName: "",
+    bookName: '',
     borrowedDate: 0,
     expectedReturnDate: 0,
     return_status: false,
@@ -841,6 +841,7 @@ const handleEditBook = async (reg_no) => {
           setAllotDetails((prevDetails) => ({
             ...prevDetails,
             bookId: book ? book.reg_no : null,
+            bookName: enteredBookName,
           }));
         } catch (error) {
           console.error('Error fetching book details:', error);
@@ -1781,14 +1782,16 @@ const historyColumns = useMemo(
               </div>
               <div style={{ marginTop: "5%" }}>
                 <label for="name">Book Name</label>
+                  <CategorySearch  handleAllotChange={handleBookNameChange}/>
+                
 
-                <input
+                {/*<input
                   type="text"
                   name="bookName"
                   placeholder="Book Name"
                   value={allotDetails.bookName}
                   onChange={(e) => handleBookNameChange(e.target.value)}
-                />
+                />*/}
 
               </div>
 

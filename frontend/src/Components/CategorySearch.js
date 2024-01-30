@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const CategorySearch = ({ handleAllotChange }) => {
   const [open, setOpen] = useState(false);
-  const [bookName, setBookName] = useState(null);
+  const [bookName, setBookName] = useState('');
   const [showName, setShowName] = useState('');
   const [filterBooks, setFilterBooks] = useState([]);
 
@@ -42,16 +42,17 @@ const CategorySearch = ({ handleAllotChange }) => {
 
   const handleChange = (book) => {
     setShowName(book.name);
-    setBookName('');
     setOpen(false);
-
-    // Pass both book_id and book_name to the parent component
-    handleAllotChange({ target: { name: 'book_id', value: book.reg_no } });
-    handleAllotChange({ target: { name: 'book_name', value: book.name } });
-
+  
+  
     // Call handleBookNameChange with the entered book name
     handleAllotChange(book.name);
+  
+    // Assuming handleAllotChange updates allotdetails.bookname
+    // You can also directly set book.name here instead of calling handleAllotChange
+    setBookName(book.name);
   };
+  
 
   return (
     <>
@@ -88,8 +89,8 @@ const CategorySearch = ({ handleAllotChange }) => {
             type="text"
             placeholder="Search items"
             autoComplete="off"
-            value={bookName === null ? '' : bookName}
-            onChange={(e) => setBookName(e.target.value === '' ? null : e.target.value)}
+            value={bookName || ''}
+            onChange={(e) => setBookName(e.target.value)}
           />
           
 
