@@ -121,17 +121,17 @@ export default function Dashboard() {
                       {
                         id: 0,
                         value: remaining,
-                        color: "#9656A1",
+                        color: "#092F5D",
                       },
                       {
                         id: 1,
                         value: lending - remaining,
-                        color: "#efc2f9",
+                        color: "#66A1DB",
                       },
                       {
                         id: 2,
                         value: lending ,
-                        color: "#800080",
+                        color: "#A1BFD9",
                       },
                     ],
                   },
@@ -147,21 +147,21 @@ export default function Dashboard() {
             <div className="flex">
               <div
                 className="color"
-                style={{ backgroundColor: "#9656A1" }}
+                style={{ backgroundColor: "#092F5D" }}
               ></div>
               <p>Available Books - ({remaining})</p>
             </div>
             <div className="flex">
               <div
                 className="color"
-                style={{ backgroundColor: "#efc2f9" }}
+                style={{ backgroundColor: "#66A1DB" }}
               ></div>
               <p>Returned Books - ({lending - remaining})</p>
             </div>
             <div className="flex">
               <div
                 className="color"
-                style={{ backgroundColor: "#800080" }}
+                style={{ backgroundColor: "#A1BFD9" }}
               ></div>
               <p>Lended Books - ({lending})</p>
             </div>
@@ -177,12 +177,12 @@ export default function Dashboard() {
                       {
                         id: 0,
                         value: students,
-                        color: "#9656A1",
+                        color: "#A1BFD9",
                       },
                       {
                         id: 1,
                         value: staff,
-                        color: "#efc2f9",
+                        color: "#369BF4",
                       },
                     ],
                   },
@@ -198,14 +198,14 @@ export default function Dashboard() {
             <div className="flex">
               <div
                 className="color"
-                style={{ backgroundColor: "#9656A1" }}
+                style={{ backgroundColor: "#A1BFD9" }}
               ></div>
               <p>Total Students - ({students})</p>
             </div>
             <div className="flex">
               <div
                 className="color"
-                style={{ backgroundColor: "#efc2f9" }}
+                style={{ backgroundColor: "#369BF4" }}
               ></div>
               <p>Total Staff - ({staff})</p>
             </div>
