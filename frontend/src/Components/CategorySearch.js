@@ -3,25 +3,41 @@ import axios from 'axios';
 
 const CategorySearch = ({ handleAllotChange }) => {
   const [open, setOpen] = useState(false);
-  const [bookName, setBookName] = useState('');
+  const [bookName, setBookName] = useState(null);
   const [showName, setShowName] = useState('');
   const [filterBooks, setFilterBooks] = useState([]);
 
   useEffect(() => {
     async function fetchBooks() {
       try {
-        const response = await axios.get(`https://demo-lms.vercel.app/book/getBookByName/${bookName}`);
-        setFilterBooks(response.data ? [response.data] : []);
+        if (bookName !== null) { // Check if bookName is not null before making the request
+          const response = await axios.get(`https://demo-lms.vercel.app/book/getBookByName/${bookName}`);
+          setFilterBooks(response.data ? [response.data] : []);
+        }
       } catch (error) {
         console.error('Error fetching books:', error);
       }
     }
+
+    const getBooks = async () => {
+      try {
+        const response = await axios.get(`https://demo-lms.vercel.app/book/getBook`);
+        const books = response.data;
+        console.log(books);
+    
+        setFilterBooks(books);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle error appropriately, e.g., show a message to the user
+      }
+    };
 
     if (bookName !== '') {
       fetchBooks();
     } else {
       setFilterBooks([]);
     }
+    getBooks();
   }, [bookName]);
 
   const handleChange = (book) => {
@@ -66,15 +82,16 @@ const CategorySearch = ({ handleAllotChange }) => {
               id="dropdown-menu"
               className="absolute overflow-scroll w-full max-h-[300px] min-w-[300px] right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 pl-4 space-y-2"
             >
-              <input
-                id="search-input"
-                className="block border-2 w-full px-4 py-2 text-gray-800 rounded-md border-gray-300 focus:outline-none"
-                type="text"
-                placeholder="Search items"
-                autoComplete="off"
-                value={bookName}
-                onChange={(e) => setBookName(e.target.value)}
-              />
+            <input
+            id="search-input"
+            className="block border-2 w-full px-4 py-2 text-gray-800 rounded-md border-gray-300 focus:outline-none"
+            type="text"
+            placeholder="Search items"
+            autoComplete="off"
+            value={bookName === null ? '' : bookName}
+            onChange={(e) => setBookName(e.target.value === '' ? null : e.target.value)}
+          />
+          
 
               {filterBooks.length > 0 ? (
                 filterBooks.map((book) => (
