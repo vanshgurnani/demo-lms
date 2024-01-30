@@ -95,7 +95,7 @@ export default function Dashboard() {
         </div>
         <div className="card">
           <div className="title">
-            <p>Number of Books Lent</p>
+            <p>Number of Books Lend</p>
           </div>
           <div className="number">
             <CountUp end={lending} duration={2}></CountUp>

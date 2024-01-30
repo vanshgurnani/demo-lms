@@ -955,6 +955,7 @@ const historyColumns = useMemo(
         muiTableHeadCellProps: { sx: { color: "green" } }, //optional custom props
         // Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
         Cell: ({ cell }) => {
+          const isReturned = cell.getValue() === "true";
           return (
             <select
               name={cell.row.original.id}
@@ -964,7 +965,7 @@ const historyColumns = useMemo(
             >
 
               <option value="true">Returned</option>
-              <option value="false">Pending</option>
+              <option value="false" disabled={isReturned}>Pending</option>
             </select>
           );
         },
@@ -1572,7 +1573,7 @@ const historyColumns = useMemo(
                   name="student_role"
                   value={studentDetails.student_role}
                   onChange={handleStudentChange}
-                  style={{ border: "1px solid #ccc",width:"485px", borderRadius: "4px" }}
+                  style={{ border: "1px solid #ccc", borderRadius: "4px" }}
                   
 
                 >
@@ -1815,6 +1816,10 @@ const historyColumns = useMemo(
                   onChange={(e) => {
                     setAllotDetails({ ...allotDetails, borrowedDate: e.target.value });
                   }}
+                  style={{ 
+                    padding: "10px", 
+                    fontSize: "16px", 
+                  }}
                 />
               </div>
               <div style={{ marginTop: "5%" }}>
@@ -1826,6 +1831,10 @@ const historyColumns = useMemo(
                   value={allotDetails.expectedReturnDate}
                   onChange={(e) => {
                     setAllotDetails({ ...allotDetails, expectedReturnDate: e.target.value });
+                  }}
+                  style={{ 
+                    padding: "10px",
+                    fontSize: "16px", 
                   }}
                   onKeyPress={(e) => {
                     if (e.key === "Enter") {

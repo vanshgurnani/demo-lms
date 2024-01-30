@@ -119,7 +119,7 @@ router.put('/updateAllot/:studentId', async (req, res) => {
   const studentId = req.params.studentId;
 
   try {
-    // Find the allotment by bookId
+    // Find the allotment by studentId
     const allot = await Allot.findOne({ studentId });
 
     if (!allot) {
@@ -132,12 +132,24 @@ router.put('/updateAllot/:studentId', async (req, res) => {
     // Save the updated allotment
     await allot.save();
 
+    // If the return status is true, increment the quantity of the book
+    if (allot.return_status) {
+      const book = await Book.findOne({ name: allot.bookName });
+
+      if (book) {
+        book.quantity += 1;
+        book.available += 1;
+        await book.save();
+      }
+    }
+
     res.json({ message: 'Return status updated successfully', allot });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
 
 router.get('/getAllotNotReturned', async (req, res) => {
   try {
