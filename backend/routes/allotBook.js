@@ -8,7 +8,9 @@ const cors = require('cors');
 
 router.use(cors({
   origin: ['http://localhost:3000',
-  'https://demo-lms-36b7.vercel.app'], // Specify the allowed origin
+  'https://demo-lms-36b7.vercel.app',
+  'https://lms.ptcnanveejdaund.in'
+], // Specify the allowed origin
   methods: ['GET', 'DELETE','PUT','POST']
   // You can include other options as needed
 }));
