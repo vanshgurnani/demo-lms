@@ -1,5 +1,6 @@
 .db{
   box-sizing: border-box;
+  margin-left: 20px;
 }
 .db .numbers{
   display: flex;

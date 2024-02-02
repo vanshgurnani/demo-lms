@@ -121,7 +121,7 @@ td {
 
 #sidebar #sidebar_option {
   width: 100%;
-  padding: 2% 2%;
+  padding: 3% 3%;
   /* background-color: rgb(255, 255, 255); */
   /* background: #f8f6f8; */
   color: white;
@@ -274,4 +274,10 @@ form {
 #sidebar_option_login {
   font-size: 30px;
   font-weight: 700;
+}
+
+@media screen and (min-width: 80vw) {
+  #sidebar {
+    height:550px;
+  }
 }
